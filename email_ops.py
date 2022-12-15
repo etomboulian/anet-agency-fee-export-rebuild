@@ -10,9 +10,9 @@ load_dotenv()
 class SMTPSettings(Enum):
     smtp_server = os.environ.get('SMTP_SERVER')
     smtp_port = os.environ.get('SMTP_PORT')
-    sender_email = os.environ.get('SENDER_EMAIL')
-    sender_password = os.environ.get('SENDER_PASSWORD')
-    target_email = os.environ.get('TARGET_EMAIL')
+    sender_email = os.environ.get('SMTP_SENDER_EMAIL')
+    sender_password = os.environ.get('SMTP_SENDER_PASSWORD')
+    target_email = os.environ.get('SMTP_TARGET_EMAIL')
 
 def email_results(file_name):
     # Create the message
