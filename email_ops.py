@@ -23,7 +23,13 @@ def email_results(file_name):
     msg.attach(MIMEText(open(os.path.join(os.getcwd(), os.environ.get('OUTPUT_PATH'), file_name)).read()))
 
     # send the message
-    with smtplib.SMTP(SMTPSettings.smtp_server.value,SMTPSettings.smtp_port.value) as server:
+    with smtplib.SMTP(SMTPSettings.smtp_server.value, SMTPSettings.smtp_port.value) as server:
         server.ehlo()
-        server.login(SMTPSettings.sender_email.value, SMTPSettings.sender_password.value)
-        server.sendmail(SMTPSettings.sender_email.value, SMTPSettings.target_email.value, msg.as_string())
+        server.login(
+            login=SMTPSettings.sender_email.value, 
+            password=SMTPSettings.sender_password.value)
+        server.sendmail(
+            from_addr=SMTPSettings.sender_email.value, 
+            to_addrs=SMTPSettings.target_email.value, 
+            msg=msg.as_string()
+            )
