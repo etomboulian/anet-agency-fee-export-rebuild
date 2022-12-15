@@ -19,5 +19,6 @@ OUTPUT_PATH=output
 ```
 
 2. python -m venv .venv
-3. pip install -r requirements.txt
-4. python main.py
+3. ./.venv/scripts/activate
+4. pip install -r requirements.txt
+5. python main.py
