@@ -18,7 +18,7 @@ def email_results(file_name):
     msg['Subject'] = '[Email Test]'
     msg['From'] = sender_email
     msg['To'] = target_email
-    msg.attach(MIMEText(open(file_name).read()))
+    msg.attach(MIMEText(open(os.path.join(os.getcwd(), os.environ.get('OUTPUT_PATH'), file_name)).read()))
 
     # send the message
     with smtplib.SMTP(smtp_server,smtp_port) as server:
