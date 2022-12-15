@@ -11,12 +11,11 @@ export_date = date(2012, 3, 1)
 
 def main():
     db = Database(export_date=export_date)
-    conn = db.connect()
     print("Database connected")
     data1 = db.header_row
     print("Create Header data complete")
-    data2 = db.execute_query(conn, db.query_agency_fees_data)
-    print("Query 2 complete")
+    data2 = db.execute_query(db.conn, db.query_agency_fees_data)
+    print("Agency Fee Data Query complete")
 
     output_file_name = write_output(data1, data2)
     print("Output file written successfully")

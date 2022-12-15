@@ -44,6 +44,7 @@ class Database:
         from export_data_detail
         group by today, tx_date, revenue_site, account_name, account_number
         """.format(self.export_date.strftime(query_date_format))
+        self.conn = self.connect()
 
     def connect(self):
         return pymssql.connect(
