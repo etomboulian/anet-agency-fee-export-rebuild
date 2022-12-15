@@ -10,7 +10,6 @@ sql_port = os.environ.get('DB_PORT')
 sql_db_name = os.environ.get('DB_NAME')
 sql_user = os.environ.get('DB_USER')
 sql_password = os.environ.get('DB_PASSWORD')
-conn_string = 'DRIVER={ODBC Driver 18 for SQL Server};SERVER='+sql_address+';DATABASE='+sql_db_name+';ENCRYPT=yes;UID='+sql_user+';PWD='+ sql_password
 
 @dataclass
 class Database:
