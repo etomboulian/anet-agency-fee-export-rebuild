@@ -46,6 +46,9 @@ class Database:
         """.format(self.export_date.strftime(query_date_format))
         self.conn = self.connect()
 
+    def __del__(self):
+        self.conn.close()
+
     def connect(self):
         return pymssql.connect(
             server=SQLSettings.sql_address.value, 
