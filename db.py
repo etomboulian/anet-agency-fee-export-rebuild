@@ -5,12 +5,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-server_address = os.environ.get('DB_SERVER')
-db_name = os.environ.get('DB_NAME')
-user_name = os.environ.get('DB_USER')
-password = os.environ.get('DB_PASSWORD')
-conn_string = 'DRIVER={ODBC Driver 18 for SQL Server};SERVER='+server_address+';DATABASE='+db_name+';ENCRYPT=yes;UID='+user_name+';PWD='+ password
-print(conn_string)
+sql_address = os.environ.get('DB_SERVER')
+sql_port = os.environ.get('DB_PORT')
+sql_db_name = os.environ.get('DB_NAME')
+sql_user = os.environ.get('DB_USER')
+sql_password = os.environ.get('DB_PASSWORD')
+conn_string = 'DRIVER={ODBC Driver 18 for SQL Server};SERVER='+sql_address+';DATABASE='+sql_db_name+';ENCRYPT=yes;UID='+sql_user+';PWD='+ sql_password
 
 @dataclass
 class Database:
@@ -44,7 +44,7 @@ class Database:
         """
 
     def connect(self):
-        return pymssql.connect(server="127.0.0.1", port="1434", user="evan", password="evan", database="ljsupport12")
+        return pymssql.connect(server=sql_address, port=sql_port, user=sql_user, password=sql_password, database=sql_db_name)
 
     def execute_query(self, conn, query):
         cursor = conn.cursor()
