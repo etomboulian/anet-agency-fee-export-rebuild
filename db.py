@@ -1,5 +1,3 @@
-from dataclasses import dataclass
-from datetime import date
 import pymssql, os
 from dotenv import load_dotenv
 
@@ -11,11 +9,10 @@ sql_db_name = os.environ.get('DB_NAME')
 sql_user = os.environ.get('DB_USER')
 sql_password = os.environ.get('DB_PASSWORD')
 
-@dataclass
-class Database:
-    export_date: date
 
-    def __post_init__(self):
+class Database:
+    def __init__(self, export_date):
+        self.export_date = export_date
         self.query_header_row = f"declare @export_date date = '03/01/2012'; select 'ACTIVENet Daily Agency Fee Export', convert(varchar,getdate(),102), convert(varchar,@export_date, 102);"
         self.query_agency_fees_data = f"""
         declare @export_date date = '03/01/2012';
