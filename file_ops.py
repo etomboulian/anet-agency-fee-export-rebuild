@@ -12,8 +12,7 @@ output_file_name = os.path.join(os.getcwd(), output_folder, f'agency_fee_export-
 def write_output(data1, data2):
     with open(output_file_name, 'w') as f:
         # Write the header row into the output csv file
-        for row in data1:
-            f.write(row[0] + ',' + str(row[1]) + ',' + str(row[2]) + '\n')
+        f.write(data1[0] + ',' + str(data1[1]) + ',' + str(data1[2]) + '\n')
         # Write the export data into the output csv file
         for row in data2:
             for element in row:

@@ -1,4 +1,5 @@
 import pymssql, os
+from datetime import date, datetime
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -9,13 +10,16 @@ sql_db_name = os.environ.get('DB_NAME')
 sql_user = os.environ.get('DB_USER')
 sql_password = os.environ.get('DB_PASSWORD')
 
+query_date_format = '%m/%d/%Y'
+date_format = '%Y.%m.%d'
 
 class Database:
-    def __init__(self, export_date):
+    def __init__(self, export_date: date):
         self.export_date = export_date
-        self.query_header_row = f"declare @export_date date = '03/01/2012'; select 'ACTIVENet Daily Agency Fee Export', convert(varchar,getdate(),102), convert(varchar,@export_date, 102);"
-        self.query_agency_fees_data = f"""
-        declare @export_date date = '03/01/2012';
+        self.header_row = ['ACTIVENet Daily Agency Fee Export', datetime.now().strftime(date_format), export_date.strftime(date_format)] 
+        # f"declare @export_date date = '03/01/2012'; select 'ACTIVENet Daily Agency Fee Export', convert(varchar,getdate(),102), convert(varchar,@export_date, 102);"
+        self.query_agency_fees_data = """
+        declare @export_date date = '{0}';
 
         with export_data_detail as (
             select cast(getdate() as date) as today, 
@@ -37,7 +41,7 @@ class Database:
         select convert(varchar,today, 102) as today, convert(varchar, tx_date, 102) as tx_date, account_name, account_number, sum(cc_amount) as cc_amt, sum(cc_fee) as cc_fee, sum(tx_fee) as tx_fee, sum(amt_due_org) as amt_due_org, revenue_site 
         from export_data_detail
         group by today, tx_date, revenue_site, account_name, account_number
-        """
+        """.format(self.export_date.strftime(query_date_format))
 
     def connect(self):
         return pymssql.connect(server=sql_address, port=sql_port, user=sql_user, password=sql_password, database=sql_db_name)
